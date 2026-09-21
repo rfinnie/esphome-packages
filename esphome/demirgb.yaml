@@ -1,0 +1,43 @@
+# SPDX-PackageName: esphome-packages
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://forge.colobox.com/rfinnie/esphome-packages
+# SPDX-FileCopyrightText: © 2026 Ryan Finnie <ryan@finnie.org>
+# SPDX-License-Identifier: MPL-2.0
+---
+esphome:
+  name: "demirgb"
+  friendly_name: "DemiRGB"
+
+esp8266:
+  board: "d1_mini"
+
+logger:
+
+api:
+
+ota:
+  platform: "esphome"
+
+captive_portal:
+
+output:
+  - platform: "esp8266_pwm"
+    pin: "GPIO12"
+    id: "output_esp8266_pwm_green"
+    frequency: "240Hz"
+  - platform: "esp8266_pwm"
+    pin: "GPIO13"
+    id: "output_esp8266_pwm_red"
+    frequency: "240Hz"
+  - platform: "esp8266_pwm"
+    pin: "GPIO14"
+    id: "output_esp8266_pwm_blue"
+    frequency: "240Hz"
+
+light:
+  - platform: "rgb"
+    name: "RGB Light"
+    blue: "output_esp8266_pwm_blue"
+    green: "output_esp8266_pwm_green"
+    red: "output_esp8266_pwm_red"
+    id: "light_rgb_1"
