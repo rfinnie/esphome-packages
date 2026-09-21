@@ -1,0 +1,94 @@
+# SPDX-PackageName: esphome-packages
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://forge.colobox.com/rfinnie/esphome-packages
+# SPDX-FileCopyrightText: © 2026 Ryan Finnie <ryan@finnie.org>
+# SPDX-License-Identifier: MPL-2.0
+---
+# Basic Config
+esphome:
+  name: "s31"
+  friendly_name: "Sonoff S31"
+
+esp8266:
+  board: "esp12e"
+  early_pin_init: false
+  restore_from_flash: false # Set to true to use one of the switch's RESTORE_X restore_mode options
+
+captive_portal:
+
+api:
+
+ota:
+  platform: "esphome"
+
+# Device Specific Config
+
+logger:
+  baud_rate: 0 # (UART logging interferes with cse7766)
+  logs:
+    sensor: "DEBUG" # (Overide any global setting, to VERBOSE will spamming the cse7766 sensors)
+
+uart:
+  rx_pin: "RX"
+  baud_rate: 4800
+  parity: "EVEN"
+
+binary_sensor:
+  - platform: "gpio"
+    pin:
+      number: "GPIO0"
+      mode: "INPUT_PULLUP"
+      inverted: true
+    name: "Sonoff S31 Button"
+    on_press:
+      - switch.toggle: "relay"
+  - platform: "status"
+    name: "Sonoff S31 Status"
+
+sensor:
+  - platform: "wifi_signal"
+    name: "Sonoff S31 WiFi Signal"
+    update_interval: "60s"
+  - platform: "cse7766"
+    current:
+      name: "Sonoff S31 Current"
+      accuracy_decimals: 2
+      filters:
+        - throttle_average: "60s"
+    voltage:
+      name: "Sonoff S31 Voltage"
+      accuracy_decimals: 2
+      filters:
+        - throttle_average: "60s"
+    power:
+      name: "Sonoff S31 Power"
+      accuracy_decimals: 2
+      id: "my_power"
+      filters:
+        - throttle_average: "60s"
+    energy:
+      name: "Sonoff S31 Energy"
+      accuracy_decimals: 2
+      filters:
+        - throttle: "60s"
+    apparent_power:
+      name: "Sonoff S31 Apparent Power"
+      filters:
+        - throttle_average: "60s"
+    power_factor:
+      name: "Sonoff S31 Power Factor"
+      accuracy_decimals: 2
+      filters:
+        - throttle_average: "60s"
+
+switch:
+  - platform: "gpio"
+    name: "Sonoff S31 Relay"
+    pin: "GPIO12"
+    id: "relay"
+    restore_mode: "RESTORE_DEFAULT_ON" # Powering the relay may cause damage or instability when the programmer is supplying Vcc.
+
+status_led:
+  pin:
+    number: "GPIO13"
+    inverted: true
