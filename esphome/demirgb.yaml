@@ -41,3 +41,8 @@ light:
     green: "output_esp8266_pwm_green"
     red: "output_esp8266_pwm_red"
     id: "light_rgb_1"
+
+sensor:
+  - platform: "wifi_signal"
+    name: "WiFi Signal Sensor"
+    update_interval: "60s"
