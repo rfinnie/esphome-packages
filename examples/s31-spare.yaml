@@ -1,0 +1,24 @@
+# SPDX-PackageName: esphome-packages
+# SPDX-PackageSupplier: Ryan Finnie <ryan@finnie.org>
+# SPDX-PackageDownloadLocation: https://forge.colobox.com/rfinnie/esphome-packages
+# SPDX-FileCopyrightText: © 2026 Ryan Finnie <ryan@finnie.org>
+# SPDX-License-Identifier: MPL-2.0
+#
+# Used for writing a stub captive portal to fresh S31 units.
+---
+esphome:
+  name: "s31-spare"
+  friendly_name: "s31-spare"
+api:
+packages:
+  sonoff-s31:
+    url: "https://forge.colobox.com/rfinnie/esphome-packages"
+    files:
+      - "esphome/sonoff-s31.yaml"
+web_server:
+captive_portal:
+wifi:
+  ap:
+    ssid: "S31Spare"
+    password: "S31Spare"
+ota:
