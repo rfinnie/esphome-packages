@@ -33,6 +33,11 @@ output:
     pin: "GPIO14"
     id: "output_esp8266_pwm_blue"
     frequency: "240Hz"
+  - platform: "esp8266_pwm"
+    id: "output_esp8266_pwm_status"
+    pin: "GPIO2"
+    inverted: true
+    frequency: "100Hz"
 
 light:
   - platform: "rgb"
@@ -41,6 +46,23 @@ light:
     green: "output_esp8266_pwm_green"
     red: "output_esp8266_pwm_red"
     id: "light_rgb_1"
+  - platform: "monochromatic"
+    name: "Status LED Light"
+    id: "light_status_led"
+    output: "output_esp8266_pwm_status"
+    disabled_by_default: true
+
+binary_sensor:
+  - platform: "gpio"
+    name: "Configuration Mode"
+    id: "binary_sensor_config"
+    pin:
+      number: "GPIO5"
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+    disabled_by_default: true
 
 sensor:
   - platform: "wifi_signal"
