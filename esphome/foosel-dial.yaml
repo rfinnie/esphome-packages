@@ -90,3 +90,17 @@ event:
       - "multi_press_2"
       - "multi_press_3"
       - "long_press"
+
+output:
+  - platform: "esp8266_pwm"
+    id: "output_esp8266_pwm_status"
+    pin: "GPIO2"
+    inverted: true
+    frequency: "100Hz"
+
+light:
+  - platform: "monochromatic"
+    name: "Status LED Light"
+    id: "light_status_led"
+    output: "output_esp8266_pwm_status"
+    disabled_by_default: true
